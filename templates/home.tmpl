@@ -15,12 +15,17 @@
     </thead>
     <tbody>
         <tr>
-            <td>1</td>
-            <td>Franchesco</td>
-            <th>corre@hotmail</th>
-            <th>Edit | Delente</th>
+
+        {{range.}}
+            <td>{{.Id}}</td>
+            <td>{{.Name}}</td>
+            <th>{{.Email}}</th>
+            <th>Edit {{.Id}}| Delente {{.Id}}</th>
         </tr>
         <tr>
+
+        {{end}}
+
            
         </tr>
     </tbody>

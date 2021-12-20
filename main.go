@@ -62,7 +62,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(aremployer)
 
-	templt.ExecuteTemplate(w, "home", nil)
+	templt.ExecuteTemplate(w, "home", aremployer)
 
 }
 
