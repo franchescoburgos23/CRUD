@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -28,16 +29,38 @@ func ConnetionBD() (conexion *sql.DB) {
 
 var templt = template.Must(template.ParseGlob("templates/*"))
 
+type Employer struct {
+	Id    int
+	Name  string
+	Email string
+}
+
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	establishconnexion := ConnetionBD()
-	insertconnexion, err := establishconnexion.Prepare("INSERT INTO Empleados(nombre,correo) VALUES ('Juan','correo@gmail.com')")
+	records, err := establishconnexion.Query("SELECT *FROM Empleados")
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	insertconnexion.Exec()
+	employer := Employer{}
+	aremployer := []Employer{}
+	for records.Next() {
+		var id int
+		var name, email string
+		err = records.Scan(&id, &name, &email)
+		if err != nil {
+			panic(err.Error())
+		}
+		employer.Id = id
+		employer.Name = name
+		employer.Email = email
+
+		aremployer = append(aremployer, employer)
+	}
+
+	fmt.Println(aremployer)
 
 	templt.ExecuteTemplate(w, "home", nil)
 
