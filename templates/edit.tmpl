@@ -9,10 +9,9 @@
        
         <form method="post" action="/update" >
 
-            <div class="form-group">
-    <label class="sr-only" for="inputName">Key of records</label>
-    <input type="text" value = {{.Id}} class="form-control" name="inputName" id="inputName" placeholder="">
-</div>
+           
+    <input type="hidden" value = {{.Id}} class="form-control" name="id" id="inputName" placeholder="">
+
 
             <div class="form-group">
               <label for="">Name</label>

@@ -140,6 +140,29 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Update(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == "POST" {
+
+		id := r.FormValue("id")
+		name := r.FormValue("Name")
+		email := r.FormValue("Email")
+
+		establishconnexion := ConnetionBD()
+		modifyrecord, err := establishconnexion.Prepare("UPDATE Empleados SET nombre=?,correo=? WHERE id=?")
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		modifyrecord.Exec(name, email, id)
+
+		http.Redirect(w, r, "/", 301)
+
+	}
+
+}
+
 func main() {
 
 	http.HandleFunc("/", Home)
@@ -147,6 +170,7 @@ func main() {
 	http.HandleFunc("/insert", Insert)
 	http.HandleFunc("/delete", Delete)
 	http.HandleFunc("/edit", Edit)
+	http.HandleFunc("/update", Update)
 
 	log.Println("Server Start")
 
