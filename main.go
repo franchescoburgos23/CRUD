@@ -60,7 +60,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		aremployer = append(aremployer, employer)
 	}
 
-	fmt.Println(aremployer)
+	//fmt.Println(aremployer)
 
 	templt.ExecuteTemplate(w, "home", aremployer)
 
@@ -93,11 +93,30 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func Delete(w http.ResponseWriter, r *http.Request) {
+
+	idemployer := r.URL.Query().Get("id")
+	fmt.Println(idemployer)
+
+	establishconnexion := ConnetionBD()
+	deleterecords, err := establishconnexion.Prepare("DELETE * FROM Empleados WHERE id= ?")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	deleterecords.Exec(idemployer)
+
+	http.Redirect(w, r, "/", 301)
+
+}
+
 func main() {
 
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/create", Create)
 	http.HandleFunc("/insert", Insert)
+	http.HandleFunc("/delete", Delete)
 
 	log.Println("Server Start")
 

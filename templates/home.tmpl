@@ -20,7 +20,10 @@
             <td>{{.Id}}</td>
             <td>{{.Name}}</td>
             <th>{{.Email}}</th>
-            <th>Edit {{.Id}}| Delente {{.Id}}</th>
+            <th>Edit {{.Id}}|
+            <a name="" id="" class="btn btn-danger" href="/delete?id={{.Id}}" role="button">Delete</a>
+
+           </th>
         </tr>
         <tr>
 
