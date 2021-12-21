@@ -111,12 +111,40 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Edit(w http.ResponseWriter, r *http.Request) {
+
+	idemployer := r.URL.Query().Get("id")
+	fmt.Println(idemployer)
+
+	establishconnexion := ConnetionBD()
+	record, err := establishconnexion.Query("SELECT *FROM Empleados WHERE id =? ", idemployer)
+
+	employer := Employer{}
+
+	for record.Next() {
+		var id int
+		var name, email string
+		err = record.Scan(&id, &name, &email)
+		if err != nil {
+			panic(err.Error())
+		}
+		employer.Id = id
+		employer.Name = name
+		employer.Email = email
+
+	}
+
+	fmt.Println(employer)
+
+}
+
 func main() {
 
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/create", Create)
 	http.HandleFunc("/insert", Insert)
 	http.HandleFunc("/delete", Delete)
+	http.HandleFunc("/edit", Edit)
 
 	log.Println("Server Start")
 
