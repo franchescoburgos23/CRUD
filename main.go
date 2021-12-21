@@ -99,7 +99,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(idemployer)
 
 	establishconnexion := ConnetionBD()
-	deleterecords, err := establishconnexion.Prepare("DELETE * FROM Empleados WHERE id= ?")
+	deleterecords, err := establishconnexion.Prepare("DELETE FROM Empleados WHERE id=?")
 
 	if err != nil {
 		panic(err.Error())
