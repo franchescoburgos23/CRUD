@@ -136,6 +136,8 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(employer)
 
+	templt.ExecuteTemplate(w, "edit", employer)
+
 }
 
 func main() {
